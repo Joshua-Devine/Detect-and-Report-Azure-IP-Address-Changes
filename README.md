@@ -16,7 +16,7 @@ lib32z1-dev
 
 Use the following command to install all system packages on Ubuntu
 ```
-sudo apt update && sudo apt install cpanminus build-essential libwww-perl 
+sudo apt update && sudo apt install cpanminus build-essential libwww-perl libssl-dev lib32z1-dev
 ```
 
 ### Perl Libraries
