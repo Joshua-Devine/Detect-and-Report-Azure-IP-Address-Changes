@@ -183,7 +183,61 @@ Stores the raw JSON file(s) downloaded from "https://azservicetags.azurewebsites
 
 **./report/YYYY-MM-DD-epoch_in_seconds** - Contains all program output when --delta is called in case a notification was missed.
 
-## Troubleshooting
+## Full Usage Information
+
+Purpose:
+
+Provide the capability to display IPv4 or IPv6 addresses related to Microsoft's Azure datacenter services. Create a baseline of active IPs and compare against that baseline to find IP address changes, or changes to regions or services. Output can be sent to an external program for e-mail notification, but log files and delta reports are also generated based on each call to create a baseline or view a change in case a notification was missed. Run this program to determine the available data centers, regions, and services.  Then display the IPv4 or IPv6 addresses that are currently in use. When satisfied on the scope of services selected, create a baseline based on those parameters. Finally, run this program from a cron or scheduled service to output the delta's and create a new baseline if changes were detected.
 
 
+  ```
+  Usage:
+        --help          This output for usage information
 
+        --parent        Defaults to "Public". Choose the primary datacenter location (space separated list can be provided on the command line for multiple datacenters, or all)
+                        Available options are: "government, public, germany, china, all"
+
+        --region        Defaults to "All". Choose available regions (space separated list can be provided on the command line for multiple regions)
+
+        --service       Defaults to "All". Choose available services (space separated list can be provided on the command line for multiple services)
+
+        --show          Sets a flag to show available parents, regions, and services to filter on for use with the other options
+
+        --display       Sets a flag to display the IPs based on the parent, region, service. Additional options are IPv4/IPv6 and output can be compressed, CSV, or default
+
+        --csv           Sets a flag to output content in CSV (Comma Separated Values) format
+
+        --compress      Sets a flag to only show unique IP addresses rather than displaying likely duplicates under each parent, region, and service
+
+        --ipv4          Sets a flag to only provide IPv4 addresses that are responsive to the parent, region, and service (can be combined with --ipv6)
+
+        --ipv6          Sets a flag to only provide IPv6 addresses that are responsive to the parent, region, and service (can be combined with --ipv4)
+
+        --import_csv    Must be used with --use_opt. Provide a quoted string containing the path and filename of the csv to import selected options for more granular and easier configuration
+                        First run --show with "--parent all --csv" and filter the results to options that are desired. Then import to save those options in "./data/azure_ip.opt"
+
+        --set_opt       Provide a quoted string to save the options (parent, region, service) using the file ./data/azure_ip.opt to a name (case insensitive) set in --import_csv or on the CLI to ./data/azure_ip.opt
+                        Can only be used with the following options "--parent --region --service or --import_csv"
+
+        --use_opt       Provide a quoted string to read the options (parent, region, service) using the stored name in file ./data/azure_ip.opt)
+                        Can only be used with the following options "--import_csv --display --delta --create_baseline --use_baseline --show"
+
+        --delta         Sets a flag to compare selected baseline (--use_baseline) against the current state by using either the options chosen from --use_opt or the CLI.
+                        Can be combined with --create_baseline to display the delta and either create a new baseline or overwrite the existing depending on the name provided.
+
+        --create_baseline       Provide a quoted string containing the baseline file name to create.  Create a new baseline on based on the selected parent.
+                                Creates an entry in ./data/azure_ip.bas and writes the raw JSON files to the following directory ./baselines/.
+
+  Examples:
+        ./azure_datacenter_ip.pl --show --parent public --region eastus2 --csv
+                Shows all available "services" for the Public cloud in the eastus2 region in CSV format. (Use this format to filter in your favorite spreadsheet and import to save your selection)
+
+        ./azure_datacenter_ip.pl --display --parent all --region all --service AzureStorage --service AzureSQL --ipv4
+                Displays all IPv4 address currently in use for all clouds and all regions, if they are tagged as an AzureStorage and AzureSQL service
+
+        ./azure_datacenter_ip.pl --display --create_baseline "new_baseline_filename" --parent government --region uswest --compress
+                Creates a new file in the baselines subdirectory based on the name provided that contains the current state based on your selection of government cloud and all services in the uswest region
+                Additionally, the IP addresses are "compressed" so that no duplicate IPs are displayed (Easier updates for network configurations)
+        ./azure_datacenter_ip.pl --display --delta --use_baseline "existing baseline file name"
+                Displays the delta's based on the options stored in the selected baseline from the corresponding file(s) in the baseline subdirectory
+```
