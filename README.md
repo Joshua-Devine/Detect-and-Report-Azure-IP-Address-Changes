@@ -135,6 +135,7 @@ Unique IPv4 Addresses based on the selected scope
 *Note: Command Line Interface (CLI) definition(s) of --**region** and --**service** will apply to all of the selected scope.  E.g., Choosing the service named "AzureDevOps" will bring it into scope for **all** chosen regions and datacenters selected, which may not have the granularity that is desired.  Instead, use --import_csv and --set_opt "my options" to set your specificity.*
 
 **Save** your CLI selection to a user defined name using --**set_opt** "user defined name".  Multiple options can be defined and recalled.
+
 `./azure_datacenter_ip.pl --set_opt "my options" --parent public --region eastus westus --service actiongroup`
 
 **Save** your CSV selections using --**import_csv** "./my_csvselections.csv" and --**set_opt** "My Options"
