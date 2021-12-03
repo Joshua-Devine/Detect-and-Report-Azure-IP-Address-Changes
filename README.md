@@ -41,18 +41,22 @@ Here is the general outline on how this program should be utilized.
     1. Choose your datacenter(s) using --parent.  Options are "All, Public, Government, Germany, and China", multiple selections are permitted.
     2. Use --show and --csv with your --parent selection to generate a CSV output for filtering the available --regions and --services to meet your requirements.
     3. Import and save your options using --import_csv and --set_opt for future queries.
-4. Create a baseline based on your selections.
+
+2. Create a baseline based on your selections.
     1. Use --create_baseline and --use_opt (or CLI options) to create a named baseline for a snapshot of the existing state.
     2. Multiple baselines can be created by calling the program again and providing a different name.
+
 3. Use the baseline to detect any IP address changes.
     1. Using a baseline must include options (saved or CLI).  Note it is NOT recommended changing options from the initial baseline creation and running --delta that compares that baseline against the current state.
     2. Use the same options when creating a baseline and performing a comparison.  This includes the use of --ipv4 and/or --ipv6 for consistent and reliable output.
-2. Automate the program to notify stakeholders of IP address changes.
+
+4. Automate the program to notify stakeholders of IP address changes.
     1. Run the program as a cron job to routinely check for IP address changes.
     2. Save the program output to a file to be used for your preferred method of sending a notification. (E.g., Have a separate cron job running Sendmail to read the outputted data into the body of an e-mail message.)
-    3. Choose to either manually update the baseline, or automatically update the baseline.
-        1. The manual method will result in displaying the IP changes on each program execution, until a new baseline is created.
-        2. The automatic method will overwrite the existing baseline on each program call after displaying IP changes. (Use --create_baseline "name of baseline" with --use_baseline "name of baseline)
+
+3. Choose to either manually update the baseline, or automatically update the baseline.
+    1. The manual method will result in displaying the IP changes on each program execution, until a new baseline is created.
+    2. The automatic method will overwrite the existing baseline on each program call after displaying IP changes. (Use --create_baseline "name of baseline" with --use_baseline "name of baseline)
 
 ## Basic Usage
 
