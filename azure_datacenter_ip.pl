@@ -425,16 +425,16 @@ sub display_delta {
 	 foreach my $r (keys(%{$delta_ip{$p}})) {
 	    foreach my $s (keys(%{$delta_ip{$p}{$r}})) {
 	       if ($delta_ip{$p}{$r}{$s}[0]) {
-		  $out.=sprintf("$p,$r,$s,New,IPv4,$delta_ip{$p}{$r}{$s}[0]"), if ($ipv4);
+		  map {$out.=sprintf("$p,$r,$s,New,IPv4,$_\n");} split (/\n/, $delta_ip{$p}{$r}{$s}[0]), if ($ipv4);
 	       }
 	       if ($delta_ip{$p}{$r}{$s}[1]) {
-		  $out.=sprintf("$p,$r,$s,New,IPv6,$delta_ip{$p}{$r}{$s}[1]"), if ($ipv6);
+		  map {$out.=sprintf("$p,$r,$s,New,IPv6,$_\n");} split (/\n/, $delta_ip{$p}{$r}{$s}[1]), if ($ipv6);
 	       }
 	       if ($delta_ip{$p}{$r}{$s}[2]) {
-		  $out.=sprintf("$p,$r,$s,Remove,IPv4,$delta_ip{$p}{$r}{$s}[2]"), if ($ipv4);
+		  map {$out.=sprintf("$p,$r,$s,Remove,IPv4,$_\n");} split (/\n/, $delta_ip{$p}{$r}{$s}[2]), if ($ipv4);
 	       }
 	       if ($delta_ip{$p}{$r}{$s}[3]) {
-		  $out.=sprintf("$p,$r,$s,Remove,IPv6,$delta_ip{$p}{$r}{$s}[3]"), if ($ipv6);
+		  map {$out.=sprintf("$p,$r,$s,Remove,IPv6,$_\n");} split (/\n/, $delta_ip{$p}{$r}{$s}[3]), if ($ipv6);
 	       }
 	    }
 	 }
