@@ -433,7 +433,7 @@ sub display_delta {
 	       if ($delta_ip{$p}{$r}{$s}[2]) {
 		  $out.=sprintf("$p,$r,$s,Remove,IPv4,$delta_ip{$p}{$r}{$s}[2]"), if ($ipv4);
 	       }
-	       if ($delta_ip{$p}{$r}{$s}[1]) {
+	       if ($delta_ip{$p}{$r}{$s}[3]) {
 		  $out.=sprintf("$p,$r,$s,Remove,IPv6,$delta_ip{$p}{$r}{$s}[3]"), if ($ipv6);
 	       }
 	    }
